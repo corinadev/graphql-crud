@@ -5239,6 +5239,10 @@ react-apollo@^2.1.0-beta.2:
     lodash "4.17.4"
     prop-types "^15.6.0"
 
+react-data-grid@^3.0.11:
+  version "3.0.11"
+  resolved "https://registry.yarnpkg.com/react-data-grid/-/react-data-grid-3.0.11.tgz#06329d1548a29de43b314dc51016f972ca34750a"
+
 react-dev-utils@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-5.0.0.tgz#425ac7c9c40c2603bc4f7ab8836c1406e96bb473"

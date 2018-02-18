@@ -8,7 +8,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import './index.css';
 import 'react-virtualized/styles.css'; // only needs to be imported once
 
-import EmployeeList from './components/EmployeeList';
+import EmployeeListEditable from './components/EmployeeListEditable';
 import registerServiceWorker from './registerServiceWorker';
 
 const client = new ApolloClient({
@@ -20,7 +20,7 @@ const client = new ApolloClient({
 
 ReactDOM.render(
     <ApolloProvider client={client}>
-        <EmployeeList />
+        <EmployeeListEditable />
     </ApolloProvider>
 , document.getElementById('root'));
 registerServiceWorker();
