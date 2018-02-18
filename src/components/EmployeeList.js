@@ -6,8 +6,9 @@ import { Column, Table } from 'react-virtualized';
 const GET_EMPLOYEES = gql`
     query { 
         allEmployees { 
+            id,
             firstName, 
-            lastName 
+            lastName
         } 
     }
 `;
