@@ -6,7 +6,8 @@ import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
 import './index.css';
-import App from './App';
+import 'react-virtualized/styles.css'; // only needs to be imported once
+
 import EmployeeList from './components/EmployeeList';
 import registerServiceWorker from './registerServiceWorker';
 
