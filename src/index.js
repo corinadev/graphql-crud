@@ -16,6 +16,7 @@ import 'react-virtualized/styles.css'; // only needs to be imported once
 import EmployeeListEditable from './components/playground/EmployeeListEditable';
 import ProductsGrid from './components/ProductsGrid/index';
 import EditableProductsGrid from './components/EditableProductsGrid/index';
+import Agenda from './components/Agenda/index';
 import HomePage from './pages/HomePage/index';
 import ResponsiveDrawer from './components/Layout/ResponsiveDrawer';
 import registerServiceWorker from './registerServiceWorker';
@@ -35,7 +36,7 @@ ReactDOM.render(
                 <Route path="/employees" component={EmployeeListEditable}/>
                 <Route path="/products" component={ProductsGrid}/>
                 <Route path="/products-editable" component={EditableProductsGrid}/>
-                <Route path="/agenda" component={HomePage}/>
+                <Route path="/agenda" component={Agenda}/>
             </ResponsiveDrawer>
         </Router>
     </ApolloProvider>
