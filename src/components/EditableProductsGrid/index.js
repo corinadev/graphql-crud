@@ -13,6 +13,12 @@ import {
   Table, TableHeaderRow, TableEditRow, TableEditColumn,
   PagingPanel, DragDropProvider, TableColumnReordering,
 } from '@devexpress/dx-react-grid-material-ui';
+import {
+    DataTypeProvider,
+  } from '@devexpress/dx-react-grid';
+import format from 'date-fns/format';
+import parse from 'date-fns/parse';
+
 import Paper from 'material-ui/Paper';
 import Dialog, {
   DialogActions,
@@ -20,6 +26,8 @@ import Dialog, {
   DialogContentText,
   DialogTitle,
 } from 'material-ui/Dialog';
+import TextField from 'material-ui/TextField';
+
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import Input from 'material-ui/Input';
@@ -145,6 +153,20 @@ const LookupEditCellBase = ({
 );
 export const LookupEditCell = withStyles(styles, { name: 'ControlledModeDemo' })(LookupEditCellBase);
 
+const DatePicker = (({
+    value, onValueChange
+  }) => (
+    <TableCell>
+        <TextField  
+            value={format(parse(value), 'YYYY-MM-DD')}
+            type="date" 
+            onChange={event => {
+                onValueChange(format(parse(event.target.value)));
+            }} 
+        />
+    </TableCell>
+));
+
 const Cell = (props) => {
   if (props.column.name === 'discount') {
     return <ProgressBarCell {...props} />;
@@ -160,8 +182,22 @@ const EditCell = (props) => {
   if (availableColumnValues) {
     return <LookupEditCell {...props} availableColumnValues={availableColumnValues} />;
   }
+  if(props.column.name === 'saleDate') {
+    return <DatePicker {...props} />
+  }
   return <TableEditRow.Cell {...props} />;
 };
+
+const DateFormatter = ({ value }) => {
+  return format(parse(value), 'DD/MM/YYYY');
+}
+
+const DateTypeProvider = props => (
+  <DataTypeProvider
+    formatterComponent={DateFormatter}
+    {...props}
+  />
+);
 
 const getRowId = row => row.id;
 
@@ -180,7 +216,9 @@ class EditableProductsGrid extends React.PureComponent {
       ],
       tableColumnExtensions: [
         { columnName: 'amount', align: 'right' },
+        { columnName: 'saleDate', width: 300 },
       ],
+      dateColumns: ['saleDate'],
       sorting: [],
       editingRowIds: [],
       addedRows: [],
@@ -303,6 +341,7 @@ class EditableProductsGrid extends React.PureComponent {
       pageSize,
       pageSizes,
       columnOrder,
+      dateColumns
     } = this.state;
 
     return (
@@ -312,6 +351,10 @@ class EditableProductsGrid extends React.PureComponent {
           columns={columns}
           getRowId={getRowId}
         >
+         <DateTypeProvider
+            for={dateColumns}
+          />
+
           <SortingState
             sorting={sorting}
             onSortingChange={this.changeSorting}
