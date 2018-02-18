@@ -1,35 +1,7 @@
 import React from 'react';
-import { gql } from 'apollo-boost';
 import { graphql, compose } from 'react-apollo';
 import ReactDataGrid from 'react-data-grid';
-
-const GET_EMPLOYEES = gql`
-    query { 
-        allEmployees { 
-            id,
-            firstName, 
-            lastName
-        } 
-    }
-`;
-
-const UPDATE_EMPLOYEE = gql`
-    mutation (
-        $id:ID!, 
-        $firstName: String, 
-        $lastName: String
-    ) {
-        updateEmployee(
-            id: $id, 
-            firstName: $firstName,
-            lastName: $lastName
-        ) {
-            id,
-            firstName,
-            lastName
-        }
-    }
-`;
+import { GET_EMPLOYEES, UPDATE_EMPLOYEE } from '../../graphql/employees';
 
 class EmployeeList extends React.Component {
     handleGridRowsUpdated = ({ rowIds, updated }) => {
