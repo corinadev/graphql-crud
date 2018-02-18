@@ -1,9 +1,7 @@
 import React from 'react';
 import { gql } from 'apollo-boost';
-import { Query } from 'react-apollo';
 import { graphql, compose } from 'react-apollo';
 import ReactDataGrid from 'react-data-grid';
-import { from } from 'zen-observable';
 
 const GET_EMPLOYEES = gql`
     query { 
@@ -33,24 +31,6 @@ const UPDATE_EMPLOYEE = gql`
     }
 `;
 
-const columns = [
-    {
-        key: 'id',
-        name: 'ID',
-        width: 80
-    },
-    {
-        key: 'firstName',
-        name: 'First name',
-        editable: true
-    },
-    {
-        key: 'lastName',
-        name: 'Last name',
-        editable: true
-    }
-]
-
 class EmployeeList extends React.Component {
     handleGridRowsUpdated = ({ rowIds, updated }) => {
         console.log('ROWS UPDATED', rowIds, updated);
@@ -71,27 +51,32 @@ class EmployeeList extends React.Component {
       };
 
     render() {
-        return <div>
-            <Query query={GET_EMPLOYEES}>
-                {({ loading, error, data }) => {
-                    if (loading) return <div>Loading...</div>;
-                    if (error) return <div>Error :(</div>;
-        
-                    return (
-                        <ReactDataGrid
-                            enableCellSelect={true}
-                            columns={columns}
-                            rowGetter={(index) => (data.allEmployees[index])}
-                            rowsCount={data.allEmployees.length}
-                            minHeight={500}
-                            onGridRowsUpdated={this.handleGridRowsUpdated} />
-                    );
-                }}
-            </Query>
-        </div>
+        const { data } = this.props;
+        if (data.loading) return <div>Loading...</div>;
+        if (data.error) return <div>Error :(</div>
+
+        return <ReactDataGrid
+            enableCellSelect={true}
+            columns={[
+                {
+                    key: 'firstName',
+                    name: 'First name',
+                    editable: true
+                },
+                {
+                    key: 'lastName',
+                    name: 'Last name',
+                    editable: true
+                }
+            ]}
+            rowGetter={(index) => (data.allEmployees[index])}
+            rowsCount={data.allEmployees.length}
+            minHeight={500}
+            onGridRowsUpdated={this.handleGridRowsUpdated} />
     }
 }
 
 export default compose(
+    graphql(GET_EMPLOYEES, { name: 'data' }),
     graphql(UPDATE_EMPLOYEE, { name: 'updateEmployee' })
 )(EmployeeList);

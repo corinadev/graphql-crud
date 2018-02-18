@@ -47,4 +47,3 @@ const EmployeeList = () => (
 )
 
 export default EmployeeList;
-// export default () => (<div></div>);
