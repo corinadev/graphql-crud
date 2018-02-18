@@ -7,6 +7,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 
 import './index.css';
 import App from './App';
+import EmployeeList from './components/EmployeeList';
 import registerServiceWorker from './registerServiceWorker';
 
 const client = new ApolloClient({
@@ -18,7 +19,7 @@ const client = new ApolloClient({
 
 ReactDOM.render(
     <ApolloProvider client={client}>
-        <App />
+        <EmployeeList />
     </ApolloProvider>
 , document.getElementById('root'));
 registerServiceWorker();
